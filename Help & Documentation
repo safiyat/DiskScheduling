@@ -1,0 +1,51 @@
+########	Introduction	########
+ncurses (new curses) is a programming library that provides an API which allows the programmer to write text-based user interfaces in a terminal-independent manner. It is a toolkit for developing "GUI-like" application software that runs under a terminal emulator (from Wikipedia).
+Quite simply, ncurses is a programming library which lets you write programs that are (somewhat) interactive and look 'like' GUI programs. Ncurses is based on the curses library of the BSD Unix System IV release, hence it is also called curses at times.
+In this document, we will use the terms curses and ncurses interchangeably.
+
+########	Installation	########
+To install ncurses library in any POSIX compatible system, just download the compressed library file from the link:
+
+		http://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz
+
+Once downloaded, extract the compressed file in a new folder. Open terminal and then change the present working directory to the directory you extracted the downloaded file using the cd command.
+Then run the configure file (a shell script) in the terminal as follows:
+
+		$ ./configure
+
+If the configuration phase throws up some error, please rectify that error by installing the necessary packages, if any.
+After successful configuration, run the make command, like this:
+
+		$ make
+
+After successful run of the make command, run `make install` as a privileged user (as administrator), like this:
+
+		$ sudo make install
+
+Tada! You've successfully installed the curses library! To verify if it was installed correctly, run this:
+
+		$ man ncurses
+
+It should show you the man page of the ncurses library.
+
+######## Compiling using Curses ########
+To compile, you have to add a switch `lncurses` so that the linker looks up the library ncurses (hence lncurses) and links the code in that library with the object code compiled from your program.
+For example, when in the commandline environment:
+
+		$ gcc source_file.c -lncurses
+
+The output file is named a.out.
+
+
+########	More Help	########
+For more help, please visit this site:
+
+	http://www.tldp.org/HOWTO/NCURSES-Programming-HOWTO/
+
+It has got excellent documentation and tutorials to help you master the Curses library.
+
+
+########	Thank You	########
+Thank you, for reading. :)
+
+reza.safiyat@gmail.com
