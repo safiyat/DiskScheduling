@@ -37,7 +37,7 @@ int menu()
 		mvprintw(maxy / 2, (maxx - 6)/ 2, "4. SCAN2");
 		mvprintw(maxy / 2 + 1, (maxx - 6)/ 2, "5. Exit");
 		mvprintw(maxy / 2 + 3, (maxx - 14)/ 2, "Enter choice: ");
-		ch = getch() - 48;		//Yes. getch() works, and returns a value.
+		ch = getch() - 48;		//Yes. getch() works, and returns an int value, corresponding to the key pressed.
 	}while(ch < 1 || ch > 5);
 	return ch;
 }
