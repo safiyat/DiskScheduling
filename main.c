@@ -37,7 +37,7 @@ int menu()
 		mvprintw(maxy / 2, (maxx - 6)/ 2, "4. SCAN2");
 		mvprintw(maxy / 2 + 1, (maxx - 6)/ 2, "5. Exit");
 		mvprintw(maxy / 2 + 3, (maxx - 14)/ 2, "Enter choice: ");
-		ch = getch() - 48;		//Yes. getch() works, and returns an int value, corresponding to the key pressed.
+		ch = getch() - 48;		//Yes. getch() works, and returns a value.
 	}while(ch < 1 || ch > 5);
 	return ch;
 }
@@ -72,26 +72,54 @@ void fcfs(const int n, int start, const int qs, const int *queue)
 
 	num = 0;
 	step = 5;
+	mvprintw(step - 1, start * unit, "%d", start);
 	while(num < qs)
 	{
 		if(start < queue[num])				//If moving in the right direction...
+		{
 			mvhline(step, start * unit, 0, (queue[num] - start + 1) * unit);
+			if(num)
+			{
+				mvaddch(step - 1, start * unit, ACS_VLINE);
+				mvaddch(step, start * unit, ACS_LLCORNER);
+			}
+			mvaddch(step, queue[num]*unit, ACS_URCORNER);
+			step++;
+			if((num + 1) < qs)		//Print the cylinder numbers beside the lines.
+				mvprintw(step, queue[num] * unit - log(queue[num]) + 2, "%d", queue[num]);
+		}
 		else						//If moving in the left direction...
-			mvhline(step, queue[num] * unit, 0, (start - queue[num] + 1) * unit);
+		{
+			mvaddch(step - 1, start * unit, ACS_VLINE);
+			mvhline(step, queue[num] * unit, 0, (start - queue[num] + 2) * unit);
+			if(num)
+			{
+				mvaddch(step - 1, start * unit, ACS_VLINE);
+				mvaddch(step, start * unit, ACS_LRCORNER);
+			}
+			mvaddch(step, queue[num]*unit, ACS_ULCORNER);
+			step++;
+
+			if((num + 1) < qs)		//Print the cylinder numbers beside the lines.
+				mvprintw(step, queue[num] * unit + 1, "%d", queue[num]);
+		}
+		
 		total += abs(start - queue[num]);		//Total head movement
-
-		if(start < queue[num])				//The arrowheads.
-			mvprintw(step, queue[num]*unit, ">");
-		else
-			mvprintw(step, queue[num]*unit, "<");
-
+		
 		step++;
-		mvprintw(step, start * unit, "%d", start);	//Print the cylinder numbers below the lines.
-		mvprintw(step, queue[num] * unit, "%d", queue[num]);
-		step+=2;
 
 		start = queue[num];
 		num++;
+	}
+	if(start < queue[num])				//If moving in the right direction...
+	{
+		mvaddch(step - 2, queue[num - 1] * unit, ACS_LARROW);
+		printw(" %d", queue[num - 1]);
+	}
+	else
+	{
+		mvaddch(step - 2, start * unit, ACS_RARROW);
+		printw(" %d", queue[num - 1]);
 	}
 
 	attron(A_BOLD);
